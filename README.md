@@ -2,6 +2,8 @@
 
 This repository contains the code of RoSTE introduced in our work: ["RoSTE: An Efficient Quantization-Aware Supervised Fine-Tuning Approach for Large Language Models"](https://arxiv.org/abs/2502.09003)
 
+<img src="./imgs/scatter_exp1.png" width="49%"><img src="./imgs/scatter_exp2.png" width="50%">
+
 ## Installation
 
 install environment
