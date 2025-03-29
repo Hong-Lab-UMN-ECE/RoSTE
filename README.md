@@ -1,14 +1,18 @@
 # RoSTE: An Efficient Quantization-Aware Supervised Fine-Tuning Approach for Large Language Model
 
+<a href="https://arxiv.org/abs/2502.09003">
+  <img src="https://img.shields.io/static/v1?label=arXiv&message=2502.09003&color=b31b1b" />
+</a>
+
 This repository contains the code of RoSTE introduced in our work: ["RoSTE: An Efficient Quantization-Aware Supervised Fine-Tuning Approach for Large Language Models"](https://arxiv.org/abs/2502.09003)
 
-<img src="./imgs/scatter_exp1.png" width="49%"><img src="./imgs/scatter_exp2.png" width="50%">
+<img src="./imgs/scatter_pythia.png" width="33%"><img src="./imgs/scatter_qwen.png" width="33%"><img src="./imgs/scatter_llama.png" width="33.5%">
 
 ## Installation
 
 install environment
 ```bash
-git clone https://github.com/quanwei0/RoSTE
+git clone https://github.com/Hong-Lab-UMN-ECE/RoSTE
 cd RoSTE
 
 conda create -n roste python==3.10 -y
