@@ -39,7 +39,7 @@ def load_model(model_dir, method):
     elif "7b" in model_dir.lower():
         model_bit = "7b"
 
-    if "qwen" == model_arch:
+    if model_arch == "qwen":
         if method == "roste":
             model = Qwen2ForCausalLM_RQuant.from_pretrained(model_dir, torch_dtype="auto")
         elif method == "ste":
@@ -64,7 +64,7 @@ def load_model(model_dir, method):
             model = AutoModelForCausalLM.from_pretrained(model_dir, torch_dtype="auto",config=config)
             if process_word_embeddings:
                 model.lm_head.weight.data = model.model.embed_tokens.weight.data.clone()
-    elif "pythia" == model_arch:
+    elif model_arch == "pythia":
         if method == "roste":
             model = GPTNeoXForCausalLM_RQuant.from_pretrained(model_dir, torch_dtype="auto")
         elif method == "ste":

@@ -14,7 +14,7 @@ from utils.train_utils import process_args, safe_save_model_for_hf_trainer, mode
 from models.configuration_qwen2_rq import Qwen2Config as Qwen2Config_RQ
 from models.modeling_qwen2_rq_online import Qwen2ForCausalLM as Qwen2ForCausalLM_RQuant
 from models.configuration_gpt_neox_rq import GPTNeoXConfig as GPTNeoXConfig_RQ
-from models.modeling_gpt_neox_rq_online import GPTNeoXForCausalLM as GPTNeoXForCausalLM_RQuant
+from models.modeling_gpt_neox_new_rq_online import GPTNeoXForCausalLM as GPTNeoXForCausalLM_RQuant
 
 def train():
 
@@ -30,9 +30,12 @@ def train():
         revision=model_config.model_revision,
         torch_dtype=model_config.torch_dtype,
     )
-
-
-    config = Qwen2Config_RQ.from_pretrained(model_config.model_name_or_path)
+    
+    
+    if "qwen" in model_config.model_name_or_path:
+        config = Qwen2Config_RQ.from_pretrained(model_config.model_name_or_path)
+    else:
+        config = GPTNeoXConfig_RQ.from_pretrained(model_config.model_name_or_path)
     config_rq = copy.deepcopy(config)
     if not hasattr(config_rq, "quant_config") or config_rq.quant_config is None:
         config_rq.quant_config = {}
