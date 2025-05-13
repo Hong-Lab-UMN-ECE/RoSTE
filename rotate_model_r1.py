@@ -14,7 +14,8 @@ from utils.train_utils import model_info
 def main(args):
     
     config = AutoConfig.from_pretrained(args.model_dir)
-    
+
+    # for qwen2.5
     process_word_embeddings = False
     if config.tie_word_embeddings:
         config.tie_word_embeddings = False
@@ -73,7 +74,7 @@ def main(args):
         model = Qwen2ForCausalLM_RQuant.from_pretrained(
             args.model_dir, torch_dtype="auto", config=config_rq
         )
-    # for qwen2/5
+    # for qwen2.5
     if process_word_embeddings:
         model.lm_head.weight.data = model.model.embed_tokens.weight.data.clone()
     model_info(model)
@@ -89,7 +90,7 @@ def main(args):
         dataset = load_dataset("trl-lib/tldr")
         raw_test_dataset = dataset["train"].select(range(4))
         text_column, summary_column = raw_test_dataset.column_names
-        prompt = raw_test_dataset[text_column][2]
+        prompt = raw_test_dataset[text_column][0]
 
         print(f"Prompt: {prompt}")
         tokens = tokenizer(prompt, return_tensors="pt")
