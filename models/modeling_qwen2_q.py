@@ -277,8 +277,11 @@ class Qwen2Attention(nn.Module):
         query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin, position_ids)
 
         # Quantize KV cache, by quantization per token
-        key = self.key_quantizer.apply(key, self.kv_bits, True, 1)
-        value = self.value_quantizer.apply(value, self.kv_bits, True, 1)
+        key_q = self.key_quantizer.apply(key_states, self.config.quant_config["kv_bits"], self.config.quant_config["kv_sym"], self.config.quant_config["kv_clip_ratio"])
+        value_q = self.value_quantizer.apply(value_states, self.config.quant_config["kv_bits"], self.config.quant_config["kv_sym"], self.config.quant_config["kv_clip_ratio"])
+
+        key_states = key_q
+        value_states = value_q
 
         if past_key_value is not None:
             cache_kwargs = {"sin": sin, "cos": cos}  # Specific to RoPE models

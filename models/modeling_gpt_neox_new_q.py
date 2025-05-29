@@ -226,9 +226,12 @@ class GPTNeoXAttention(nn.Module):
 
 
         # Quantize KV cache, by quantization per token
-        key = self.key_quantizer.apply(key, self.kv_bits, True, 1)
-        value = self.value_quantizer.apply(value, self.kv_bits, True, 1)
+        key_q = self.key_quantizer.apply(key, self.config.quant_config["kv_bits"], self.config.quant_config["kv_sym"], self.config.quant_config["kv_clip_ratio"])
+        value_q = self.value_quantizer.apply(value, self.config.quant_config["kv_bits"], self.config.quant_config["kv_sym"], self.config.quant_config["kv_clip_ratio"])
         
+        key = key_q
+        value = value_q
+
         # Cache QKV values
         if has_layer_past:
             past_key = layer_past[0]
